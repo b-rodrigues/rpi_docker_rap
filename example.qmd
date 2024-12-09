@@ -1,0 +1,30 @@
+---
+title: "Reading objects from a targets pipeline"
+author: "Bruno Rodrigues"
+date: today
+format:
+  docx:
+    toc: true
+    number-sections: true
+    highlight-style: github
+---
+
+This document loads three plots that were made using a `{targets}` pipeline.
+
+```{r}
+targets::tar_read(lux_plot)
+```
+
+```{r}
+targets::tar_read(canton_plot)
+```
+
+```{r}
+targets::tar_read(commune_plot)
+```
+
+## Conclusion
+
+```{r}
+sessionInfo()
+```

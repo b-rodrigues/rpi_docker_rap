@@ -1,0 +1,42 @@
+FROM ubuntu:24.04
+
+RUN apt-get update && apt-get install -y \
+    curl \
+    libglpk-dev \
+    libopenblas-dev \
+    libuv1-dev \
+    libxml2-dev \
+    libcairo2-dev \
+    libgit2-dev \
+    default-libmysqlclient-dev \
+    libpq-dev \
+    libsasl2-dev \
+    libsqlite3-dev \
+    libssh2-1-dev \
+    libxtst6 \
+    libcurl4-openssl-dev \
+    libharfbuzz-dev \
+    libfribidi-dev \
+    libfreetype6-dev \
+    libpng-dev \
+    libtiff5-dev \
+    libjpeg-dev \
+    unixodbc-dev \
+    wget
+
+# This line is only necessary to install R for the arm64-linux
+# architecture. If you're using rocker/r-ver:4.4.2 as a base
+# you can skip the 3 next lines
+RUN curl -O https://pkgs.r4pi.org/dl/noble/r4pi-repo-conf_0.0.1-1_all.deb
+
+RUN dpkg -i r4pi-repo-conf_0.0.1-1_all.deb
+
+RUN apt-get update && apt-get upgrade -y && apt-get install -y r4pi
+
+# This will install the arm64-linux version of Quarto.
+# Adapt this line for other platforms.
+RUN wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.6.39/quarto-1.6.39-linux-arm64.deb -O /home/quarto.deb
+
+RUN apt-get install --yes /home/quarto.deb && rm /home/quarto.deb
+
+CMD ["R"]
