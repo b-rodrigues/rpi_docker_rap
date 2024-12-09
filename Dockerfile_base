@@ -2,25 +2,25 @@ FROM ubuntu:24.04
 
 RUN apt-get update && apt-get install -y \
     curl \
-    libglpk-dev \
-    libopenblas-dev \
-    libuv1-dev \
-    libxml2-dev \
-    libcairo2-dev \
-    libgit2-dev \
     default-libmysqlclient-dev \
+    libcairo2-dev \
+    libcurl4-openssl-dev \
+    libfreetype6-dev \
+    libfribidi-dev \
+    libgit2-dev \
+    libglpk-dev \
+    libharfbuzz-dev \
+    libjpeg-dev \
+    libopenblas-dev \
+    libpng-dev \
     libpq-dev \
     libsasl2-dev \
     libsqlite3-dev \
     libssh2-1-dev \
-    libxtst6 \
-    libcurl4-openssl-dev \
-    libharfbuzz-dev \
-    libfribidi-dev \
-    libfreetype6-dev \
-    libpng-dev \
     libtiff5-dev \
-    libjpeg-dev \
+    libuv1-dev \
+    libxml2-dev \
+    libxtst6 \
     unixodbc-dev \
     wget
 
@@ -32,6 +32,18 @@ RUN curl -O https://pkgs.r4pi.org/dl/noble/r4pi-repo-conf_0.0.1-1_all.deb
 RUN dpkg -i r4pi-repo-conf_0.0.1-1_all.deb
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y r4pi
+
+# If you're not on a raspberry pi and skipped the lines from before
+# but also don't want to use a versioned rocker image and start from scratch
+# you can either install R from the command line with 
+# RUN apt-get install r-base
+# or if you need a specific version install the R installation manager
+# and then the required version of R using
+# RUN curl -L https://rig.r-pkg.org/deb/rig.gpg -o /etc/apt/trusted.gpg.d/rig.gpg
+# RUN sh -c 'echo "deb http://rig.r-pkg.org/deb rig main" > /etc/apt/sources.list.d/rig.list' 
+# RUN apt-get update && apt-get install r-rig
+# RUN rig add 4.4.2
+# RUN rig default 4.4.2
 
 # This will install the arm64-linux version of Quarto.
 # Adapt this line for other platforms.
